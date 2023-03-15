@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: website
+  labels:
+    app: website-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: website
+  template:
+    metadata:
+      labels:
+        app: website
+    spec:
+      tolerations:
+        - key: "devday"
+          operator: "Equal"
+          value: "awesome"
+          effect: "NoSchedule"
+      containers:
+      - name: games-website
+        image: stevearacom/website
+        ports:
+        - containerPort: 3000
+

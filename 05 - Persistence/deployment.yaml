@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: website
+  namespace: website
+  labels:
+    app: website-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: website
+  template:
+    metadata:
+      labels:
+        app: website
+    spec:
+      containers:
+      - name: games-website
+        image: stevearacom/website
+        ports:
+        - containerPort: 3000
+        volumeMounts:
+          - mountPath: "/data"
+            name: data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: pvc-website
+

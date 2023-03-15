@@ -1,0 +1,39 @@
+deployment:
+  labels:
+    app: ''
+  replicas: 1
+
+pod:
+  labels:
+    app: ''
+
+container:
+  name: ''
+  image:
+  port: 80
+  env: []
+
+service:
+  enabled: false
+  port: 80
+
+ingress:
+  enabled: false
+  host: example.info
+
+configmap:
+  enabled: false
+  name: config
+  mountPath: /config
+  env: []
+  data: {}
+
+secret:
+  enabled: false
+  name: secret
+  env: []
+  data: {}
+
+mysql:
+  enabled: false
+

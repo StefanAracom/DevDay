@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "fullname" . }}
+  labels:
+    {{- with .Values.deployment.labels }}
+    {{- toYaml . | nindent 8 }}
+    {{- end }}
+spec:
+  replicas: {{ .Values.deployment.replicas }}
+  selector:
+    matchLabels:
+      {{- with .Values.pod.labels }}
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
+  template:
+    metadata:
+      labels:
+        {{- with .Values.pod.labels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      containers:
+        - name: {{ .Values.container.name }}
+          image: {{ .Values.container.image }}
+          ports:
+            - containerPort: {{ .Values.container.port }}
+{{- if .Values.container.env }}
+          env:
+            - name: {{ .Values.container.env.name }}
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ template "fullname" . }}
+                  key: {{ .Values.container.env.key }}
+{{- end }}
+{{- if .Values.configmap.enabled }}
+      volumes:
+        - name: {{ template "fullname" . }}
+          configMap:
+            name: {{ template "fullname" . }}
+{{- end }}

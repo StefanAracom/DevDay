@@ -1,0 +1,35 @@
+deployment:
+  labels:
+    app: website-deployment
+  replicas: 4
+  volumes:
+    name: config
+
+pod:
+  labels:
+    app: website
+
+container:
+  name: games-website
+  image: stevearacom/website
+  port: 3000
+  env:
+    key: backend_service
+    name: BACKEND_SERVICE
+
+service:
+  enabled: true
+  port: 80
+
+ingress:
+  enabled: true
+  host: devday.info
+
+configmap:
+  enabled: true
+  data:
+    backend_service: "http://backend-service.backend.svc.cluster.local"
+
+mysql:
+  enabled: false
+

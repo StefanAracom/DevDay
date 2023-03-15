@@ -1,0 +1,15 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: crawler
+  namespace: crawler
+spec:
+  schedule: "*/1 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: game-crawler
+              image: stevearacom/crawler:alpha
+          restartPolicy: OnFailure

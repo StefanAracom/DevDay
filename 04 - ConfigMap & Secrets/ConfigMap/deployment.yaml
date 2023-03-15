@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: website
+  namespace: website
+  labels:
+    app: website-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: website
+  template:
+    metadata:
+      namespace: website
+      labels:
+        app: website
+    spec:
+      containers:
+      - name: games-website
+        image: stevearacom/website
+        ports:
+        - containerPort: 3000
+        env:
+        - name: BACKEND_SERVICE
+          valueFrom:
+            configMapKeyRef:
+              name: config-website
+              key: backend_service
+        volumeMounts:
+        - name: config
+          mountPath: "/config"
+          readOnly: true
+      volumes:
+      - name: config
+        configMap:
+          name: config-website
+          items:
+          - key: "dev.day"
+            path: "dev.day"
+          - key: "k8s"
+            path: "k8s"

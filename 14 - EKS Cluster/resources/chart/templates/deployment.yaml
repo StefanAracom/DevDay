@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "fullname" . }}
+  labels:
+    {{- with .Values.deployment.labels }}
+    {{- toYaml . | nindent 8 }}
+    {{- end }}
+spec:
+  replicas: {{ .Values.deployment.replicas }}
+  selector:
+    matchLabels:
+      {{- with .Values.pod.labels }}
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
+  template:
+    metadata:
+      labels:
+        {{- with .Values.pod.labels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      containers:
+        - name: {{ .Values.container.name }}
+          image: {{ .Values.container.image }}
+          ports:
+            - containerPort: {{ .Values.container.port }}
+          env:
+{{- if .Values.container.env }}
+            {{- range .Values.container.env }}
+            - name: {{ .name }}
+              value: {{ .value }}
+            {{- end }}
+{{- end }}
+{{- if and .Values.secret.enabled .Values.secret.env }}
+            {{- range .Values.secret.env }}
+            - name: {{ .name }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $.Values.secret.name }}
+                  key: {{ .key }}
+            {{- end }}
+{{- end }}
+{{- if and .Values.configmap.enabled .Values.configmap.env  }}
+            {{- range .Values.configmap.env }}
+            - name: {{ .name }}
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ $.Values.configmap.name  }}
+                  key: {{ .key }}
+            {{- end }}
+          volumeMounts:
+            - name: {{ template "fullname" . }}
+              mountPath: {{ .Values.configmap.mountPath  }}
+              readOnly: true
+      volumes:
+        - name: {{ template "fullname" . }}
+          configMap:
+            name: {{ .Values.configmap.name  }}
+{{- end }}
+

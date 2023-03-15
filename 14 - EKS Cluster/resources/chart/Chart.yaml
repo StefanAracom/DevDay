@@ -1,0 +1,12 @@
+apiVersion: v2
+name: devday
+version: 1.0.0
+description: Helm Chart example for the DevDay
+dependencies:
+  - name: mysql
+    version: "9.4.5"
+    repository: https://charts.bitnami.com/bitnami
+    condition: mysql.enabled
+maintainers:
+  - name: Stefan Wohlfart
+    email: stefan.wohlfart@aracom.de

@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: config-website
+  namespace: website
+data:
+  backend_service: "http://backend.backend.svc.cluster.local"
+
+  dev.day: |
+    vortrag=k8s
+    vortragender=stefan.wohlfart
+  k8s: |
+    website=nextjs
+    backend=springboot

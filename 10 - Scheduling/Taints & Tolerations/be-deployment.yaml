@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  labels:
+    app: backend-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: simple-backend
+  template:
+    metadata:
+      labels:
+        app: simple-backend
+    spec:
+      containers:
+      - name: games-backend
+        image: stevearacom/simple-backend
+        ports:
+        - containerPort: 8080
+

@@ -1,0 +1,15 @@
+{{- if .Values.service.enabled -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "fullname" . }}
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-type: elb
+spec:
+  type: LoadBalancer
+  selector:
+    app: {{ .Values.pod.labels.app }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: {{ .Values.container.port }}
+{{- end -}}

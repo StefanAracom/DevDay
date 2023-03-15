@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: config-website
+  namespace: website
+data:
+  backend_service: "http://backend-service.backend.svc.cluster.local"

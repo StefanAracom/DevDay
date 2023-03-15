@@ -1,0 +1,36 @@
+deployment:
+  labels:
+    app: backend-deployment
+  replicas: 2
+
+pod:
+  labels:
+    app: backend
+
+container:
+  name: games-backend
+  image: stevearacom/backend
+  port: 8080
+  env:
+    - name: DB_URL
+      value: mysql-0.mysql.mysql.svc.cluster.local
+
+service:
+  enabled: true
+  port: 80
+
+secret:
+  enabled: true
+  env:
+    - name: DB_USERNAME
+      key: username
+    - name: DB_PASSWORD
+      key: password
+  data:
+    username: cm9vdA==
+    password: ZGV2ZGF5
+
+ingress:
+  enabled: false
+  host: devday.info
+

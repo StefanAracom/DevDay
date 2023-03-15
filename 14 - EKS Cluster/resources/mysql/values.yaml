@@ -1,0 +1,14 @@
+volumePermissions:
+  enabled: false
+
+auth:
+  createDatabase: true
+  database: games
+  existingSecret: db-secret
+  username: devday
+
+primary:
+  livenessProbe:
+    enabled: true
+  readinessProbe:
+    enabled: true

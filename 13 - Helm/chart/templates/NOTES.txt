@@ -1,0 +1,12 @@
+Deployed {{ .Release.Name }}@{{ .Chart.AppVersion }} to {{ .Release.Namespace }}
+
+{{ .Chart.Name }}@{{ .Chart.Version }}
+
+{{ .Chart.Description }}
+
+{{ if .Values.ingress.enabled -}}
+## Ingress
+
+url: {{ .Values.ingress.host }}
+
+{{ end -}}

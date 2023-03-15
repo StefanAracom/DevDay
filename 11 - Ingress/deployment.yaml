@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name:   website
+  namespace: website
+  labels:
+    app: website-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: website
+  template:
+    metadata:
+      labels:
+        app: website
+    spec:
+      containers:
+        - name: games-website
+          image: stevearacom/website
+          ports:
+            - containerPort: 3000
+          env:
+            - name: BACKEND_SERVICE
+              valueFrom:
+                configMapKeyRef:
+                  name: config-website
+                  key: backend_service
+      volumes:
+        - name: config
+          configMap:
+            name: config-website
