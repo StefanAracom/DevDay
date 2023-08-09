@@ -2,7 +2,7 @@
 resource "aws_eks_cluster" "this" {
   name     = "${var.project}-cluster"
   role_arn = aws_iam_role.cluster.arn # ARN of the IAM role that provides permissions for the Kubernetes control plane to make calls to AWS API operations on your behalf
-  version  = "1.25"
+  version  = "1.27"
 
   vpc_config {
     subnet_ids              = flatten([aws_subnet.public[*].id, aws_subnet.private[*].id])

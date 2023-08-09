@@ -5,12 +5,12 @@ kubectl apply -f .
 kubectl get storageclass
 
 # Connect to container
-kubectl -n mysql exec -it mysql-0
+kubectl -n mysql exec -it mysql-0 -- /bin/sh
 
 mysql
 
 CREATE DATABASE games;
 
 # Check other containers
-kubectl -n mysql exec -it mysql-1
+kubectl -n mysql exec -it mysql-1 -- /bin/sh
 

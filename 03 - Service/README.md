@@ -8,3 +8,4 @@ kubectl -n website port-forward $POD 3000:3000
 nslookup $IP
 
 # Check out NodePort
+minikube -n backend service backend-service
