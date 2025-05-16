@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  namespace: website
+  name: website
+spec:
+  containers:
+    - name: nginx
+      image: nginx

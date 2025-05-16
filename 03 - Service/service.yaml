@@ -4,10 +4,10 @@ metadata:
   name: backend-service
   namespace: backend
 spec:
-  #type: NodePort
+  type: NodePort
   selector:
     app: simple-backend
   ports:
     - port: 80
       targetPort: 8080
-      #nodePort: 30007
+      nodePort: 30007
